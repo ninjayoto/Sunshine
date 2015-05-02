@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:gravity="center_vertical"
+    android:id="@+id/list_item_forecast_textview"/>
+
+    <!--This layout file represents the one item in a list,
+it has been created by selecting new XML - New XML layout file from the menu
+and entering the file name and the "Root Element"
+in this case being the TextView that has been automatically created here -->
+
+    <!-- up in the text view we have used a framework to define minimum hieght
+     so the item will be easily tapped , the framework name is listPreferredItemHeight
+     and because now we have minimum height , we expect some space around the list item text
+     so we used gravity to -->
+
