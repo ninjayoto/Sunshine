@@ -5,4 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame" />
-    <!-- when the main activity has a layout of match_parent , we know that the activity will take the full screen, and if the fragment matches parent , then it will too fill the screen -->
+
+    <!-- We used FrameLayout here because the layout has only one view
+     when the main activity has a layout of match_parent ,
+    we know that the activity will take the full screen, and if the fragment matches parent ,
+     then it will too fill the screen -->
