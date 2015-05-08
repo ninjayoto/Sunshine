@@ -23,6 +23,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
+            // Programatically adding the fragment object to the container/ViewGroup (see below for object PlaceholderFragmnet)
+            // that will display it, using the fragmnetManager method
+            // (support refers to the version of fragment manager that supports Android prior to 3.0)
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
@@ -52,13 +55,17 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+            /**************** Fragment class containing the list adapter *****************/
+
     /**
      * A placeholder fragment containing a simple view, it's blank fragment
      * The fragment was created as an inner class, but it doesn't need to be an inner class
      */
+
     public static class PlaceholderFragment extends Fragment {
 
-        /*these are the steps for creating a scrollable list (populate a ListView):
+        /*these are the steps for creating a scrollable list (populate a ListView) with fragment:
 
         * 1. We create the Activity or fragmnet XML to display the ListView control
 
@@ -76,29 +83,45 @@ public class MainActivity extends ActionBarActivity {
         * 6. We attach the adapter to this newly created ListView object using the setAdapter() method
         * */
 
-        //STEP 2 of 6 : Declaring the ArrayAdpter (we split the declarion and assignment before the onCreateView class
+        //STEP 2 of 6 of Scrollable List : Declaring the ArrayAdpter (we split the declarion and assignment before the onCreateView class
         // because we will not be able to declare mForecaastAdapter as private down in the code)
         private ArrayAdapter<String> mForecastAdapter;
+
 
         public PlaceholderFragment() {
         }
 
 
-
+        //Next is the onCreateView method of fragments,
+        // when called will return a view to be displayed
+        // on the activity requesting it, here we are also doing the following:
+        //
+        // To turn an xml layout into java view objects,
+        // we need to inflate the layout. After the layout is inflated,
+        // we need to associate it with an Activity or Fragment.
+        // This process of inflating and
+        // associating is a little different depending on whether
+        // it’s a layout for an Activity or Fragment.
         @Override
-        public View onCreateView(LayoutInflater inflater,
-                                 //giving the fragment a view within onCreateView :
-                                 //
-                                 // To turn an xml layout into java view objects,
-                                 // we need to inflate the layout. After the layout is inflated,
-                                 // we need to associate it with an Activity or Fragment.
-                                 // This process of inflating and
-                                 // associating is a little different depending on whether
-                                 // it’s a layout for an Activity or Fragment.
+        public View onCreateView(//the first parameter is fixed (it's the XML layoutInflater for the XML file)
+                                 LayoutInflater inflater,
+
+                                 //where the fragment will be inflated
+                                 // (usually the root element of the activity displaying the fragment)
                                  ViewGroup container,
+
+                                 //The savedInstanceState Bundle is if not null , it means that it's being
+                                 // used sometimes to restores a stored appearance of a fragment
                                  Bundle savedInstanceState) {
-            //associating the the xml layout with a fragment
+
+            // Root view is the view that is going to be returned at the end
+            // the the xml layout "fragment_main" will be inflated and displayed in "container" ,
+            // at the same time are attaching the fragment to the container that will display it
+            // we set attachToRoot to false, because it's already attached to the root of the inflated XML file.
+
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+
             //Create an array (bogus data in an array to pull from, you could be pulling data from the web
             String[] forecastArray = {
                     "Today - Sunny - 88/63",
@@ -110,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
                     "Sun - Sunny - 80/68"
             };
 
-            //STEP 3 of 6 : Create an List<String> to hold the data
+            //STEP 3 of 6 Scrollable List : Create an List<String> to hold the data
 
             List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
 
@@ -122,7 +145,7 @@ public class MainActivity extends ActionBarActivity {
             since you may want to change the implementation later.
             */
 
-            //STEP 4 of 6 : passing on the parameters to the adapter (mForecastAdaper was declared above,
+            //STEP 4 of 6 Scrollable List : passing on the parameters to the adapter (mForecastAdaper was declared above,
             // now being assigned)
             mForecastAdapter =
                     new ArrayAdapter<String>(
@@ -141,14 +164,16 @@ public class MainActivity extends ActionBarActivity {
             /*The ListView takes the ListAdapter instance through its setAdapter method, as shown below
             providing the ListAdapter to the ListView */
 
-                            //STEP 5 of 6 :  Get a reference to the ListView object
+                            //STEP 5 of 6 Scrollable List :  Get a reference to the ListView object
                             ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
                             //The ListView takes the ListAdapter instance through its setAdapter method,
-                            //STEP 6 of 6 : This is how we finally attach the adapter to the ListView :
+                            //STEP 6 of 6 Scrollable List : This is how we finally attach the adapter to the ListView :
                             listView.setAdapter(mForecastAdapter);
 
-            //finally it returns a view to the fragment?
+            //We return a view to the activity that has called this fragment;s onCreateView method , to display it
             return rootView;
         }
     }
+    /**************** End of Fragment class containing the list adapter *****************/
+
 }
