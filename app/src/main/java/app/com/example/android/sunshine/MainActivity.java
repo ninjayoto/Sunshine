@@ -23,15 +23,17 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            // Programatically adding the fragment object to the container/ViewGroup (see below for object PlaceholderFragmnet)
+            // Programatically adding , in onCreate method; the fragment object to the container/ViewGroup (see below for object PlaceholderFragmnet)
             // that will display it, using the fragmnetManager method
             // (support refers to the version of fragment manager that supports Android prior to 3.0)
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
+            //It is committed, this means it is put in queue, but not displayed yet.
+            // this happens when the onCreateView in the fragment class is called
+            //by an activity.
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,8 +57,15 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-            /**************** Fragment class containing the list adapter *****************/
+            /**************** Fragment class containing the list adapter ****************
+             *
+             * Steps used here to create the fragment:
+             * 1. Created fragment XML layout file
+             * 2. Created the fragment class, extending Fragment and contains at least onCreateView
+             *    that inflates the fragment layout XML and returns a view to the activity that called it
+             * 3. Above in the onCreate method of the activity; we have programmatically added the fragment object
+             *
+             */
 
     /**
      * A placeholder fragment containing a simple view, it's blank fragment
@@ -67,7 +76,7 @@ public class MainActivity extends ActionBarActivity {
 
         /*these are the steps for creating a scrollable list (populate a ListView) with fragment:
 
-        * 1. We create the Activity or fragmnet XML to display the ListView control
+        * 1. We create the Activity or fragment XML to display the ListView control
 
         * 2. Declare an ArrayAdapter outside the onCreateView class
 
@@ -83,7 +92,8 @@ public class MainActivity extends ActionBarActivity {
         * 6. We attach the adapter to this newly created ListView object using the setAdapter() method
         * */
 
-        //STEP 2 of 6 of Scrollable List : Declaring the ArrayAdpter (we split the declarion and assignment before the onCreateView class
+        //STEP 2 of 6 of Scrollable List : Declaring the ArrayAdpter (we split the declarion and
+        // assignment before the onCreateView class
         // because we will not be able to declare mForecaastAdapter as private down in the code)
         private ArrayAdapter<String> mForecastAdapter;
 
@@ -92,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
-        //Next is the onCreateView method of fragments,
+        //The fragment class should at least have a onCreateView method of fragments,
         // when called will return a view to be displayed
         // on the activity requesting it, here we are also doing the following:
         //
@@ -103,7 +113,7 @@ public class MainActivity extends ActionBarActivity {
         // associating is a little different depending on whether
         // it’s a layout for an Activity or Fragment.
         @Override
-        public View onCreateView(//the first parameter is fixed (it's the XML layoutInflater for the XML file)
+        public View onCreateView(//the first parameter is fixed (it's the inflater for the  XML layoutInflater for the XML file)
                                  LayoutInflater inflater,
 
                                  //where the fragment will be inflated
