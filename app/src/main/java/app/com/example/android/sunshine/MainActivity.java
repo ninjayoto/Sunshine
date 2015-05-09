@@ -246,7 +246,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
 
-
             //We return a view to the activity that has called this fragment;s onCreateView method , to display it
             return rootView;
         }
